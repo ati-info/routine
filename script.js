@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const semesterList = document.getElementById('semester-list');
     const branchNav = document.getElementById('branch-nav-1');
     const routineDisplay = document.getElementById('routine-display');
+    const initialMessage = document.querySelector('.initial-message');
 
     // Hide welcome popup on button click
     closePopupBtn.addEventListener('click', () => {
@@ -28,9 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         <tr>
                             <td>রবিবার</td>
                             <td>
-                                09:30 – 10:15<br>
-                                10:20 – 11:05<br>
-                                11:10 – 11:55
+                                <div class="time-row">
+                                    <span>09:30 – 10:15</span>
+                                    <span>10:20 – 11:05</span>
+                                    <span>11:10 – 11:55</span>
+                                </div>
                             </td>
                             <td>
                                 রসায়ন-১<br>
@@ -41,9 +44,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         <tr>
                             <td>সোমবার</td>
                             <td>
-                                09:30 – 10:15<br>
-                                10:20 – 11:05<br>
-                                11:10 – 11:55
+                                <div class="time-row">
+                                    <span>09:30 – 10:15</span>
+                                    <span>10:20 – 11:05</span>
+                                    <span>11:10 – 11:55</span>
+                                </div>
                             </td>
                             <td>
                                 ব্যব: রসায়ন-১<br>
@@ -54,9 +59,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         <tr>
                             <td>মঙ্গলবার</td>
                             <td>
-                                09:30 – 10:15<br>
-                                10:20 – 11:05<br>
-                                11:10 – 11:55
+                                <div class="time-row">
+                                    <span>09:30 – 10:15</span>
+                                    <span>10:20 – 11:05</span>
+                                    <span>11:10 – 11:55</span>
+                                </div>
                             </td>
                             <td>
                                 ইংরেজি-১<br>
@@ -67,8 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         <tr>
                             <td>বুধবার</td>
                             <td>
-                                11:10 – 11:55<br>
-                                12:00 – 12:45
+                                <div class="time-row">
+                                    <span>11:10 – 11:55</span>
+                                    <span>12:00 – 12:45</span>
+                                </div>
                             </td>
                             <td>
                                 ইংরেজি-১<br>
@@ -78,8 +87,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         <tr>
                             <td>বৃহস্পতিবার</td>
                             <td>
-                                12:00 – 12:45<br>
-                                12:50 – 01:35
+                                <div class="time-row">
+                                    <span>12:00 – 12:45</span>
+                                    <span>12:50 – 01:35</span>
+                                </div>
                             </td>
                             <td>
                                 ব্যব: গণিত-১<br>
@@ -98,6 +109,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function showRoutine(semester, branch = null) {
+        if (initialMessage) {
+            initialMessage.classList.add('hidden');
+        }
+        
+        routineDisplay.innerHTML = ''; // Clear previous content
         if (branch) {
             routineDisplay.innerHTML = routines[semester][branch];
         } else {
@@ -119,12 +135,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (semester === '1') {
             branchNav.classList.remove('hidden');
             const defaultBranch = branchNav.querySelector('.branch-item[data-branch="k"]');
-            defaultBranch.classList.add('active');
+            
+            // Activate the 'k' branch and show its routine
+            const allBranchItems = branchNav.querySelectorAll('.branch-item');
+            allBranchItems.forEach(item => item.classList.remove('active'));
+            if (defaultBranch) {
+                defaultBranch.classList.add('active');
+            }
             showRoutine('1', 'k');
         } else {
             branchNav.classList.add('hidden');
-            const allBranchItems = branchNav.querySelectorAll('.branch-item');
-            allBranchItems.forEach(item => item.classList.remove('active'));
             showRoutine(semester);
         }
     });
@@ -142,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showRoutine('1', branch);
     });
 
-    // Initial load
-    showRoutine('1', 'k');
+    // Handle initial state: only show welcome popup
+    mainContainer.classList.add('hidden');
+    welcomePopup.classList.remove('hidden');
 });
-          
