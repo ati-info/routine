@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const welcomePopup = document.getElementById('welcome-popup');
     const closePopupBtn = document.getElementById('close-popup-btn');
     const mainContainer = document.querySelector('.main-container');
+    const sidebar = document.querySelector('.sidebar');
+    const content = document.querySelector('.content');
     const semesterList = document.getElementById('semester-list');
     const branchNav = document.getElementById('branch-nav-1');
     const routineDisplay = document.getElementById('routine-display');
@@ -13,93 +15,66 @@ document.addEventListener('DOMContentLoaded', () => {
         mainContainer.classList.remove('hidden');
     });
 
+    // Helper function to create routine HTML
+    function createRoutineHTML(title, routineData) {
+        let dailyRoutineHTML = '';
+        for (const day in routineData) {
+            let subjectsHTML = '';
+            for (const time in routineData[day]) {
+                subjectsHTML += `<div class="time-and-subject"><strong>(${time})</strong> ${routineData[day][time]}</div>`;
+            }
+            dailyRoutineHTML += `
+                <tr>
+                    <td>${day}</td>
+                    <td>${subjectsHTML}</td>
+                </tr>
+            `;
+        }
+
+        return `
+            <h2>${title}</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>দিন</th>
+                        <th>বিষয়</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${dailyRoutineHTML}
+                </tbody>
+            </table>
+        `;
+    }
+
+    // Data for the routines
     const routines = {
         '1': {
-            'k': `
-                <h2>১ম সেমিস্টার - ক শাখা</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>দিন</th>
-                            <th>সময়</th>
-                            <th>বিষয়</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>রবিবার</td>
-                            <td>
-                                <div class="time-row">
-                                    <span>09:30 – 10:15</span>
-                                    <span>10:20 – 11:05</span>
-                                    <span>11:10 – 11:55</span>
-                                </div>
-                            </td>
-                            <td>
-                                রসায়ন-১<br>
-                                পদার্থ-১<br>
-                                গণিত-১
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>সোমবার</td>
-                            <td>
-                                <div class="time-row">
-                                    <span>09:30 – 10:15</span>
-                                    <span>10:20 – 11:05</span>
-                                    <span>11:10 – 11:55</span>
-                                </div>
-                            </td>
-                            <td>
-                                ব্যব: রসায়ন-১<br>
-                                জীববিজ্ঞান-১<br>
-                                ব্যব: পদার্থ-১
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>মঙ্গলবার</td>
-                            <td>
-                                <div class="time-row">
-                                    <span>09:30 – 10:15</span>
-                                    <span>10:20 – 11:05</span>
-                                    <span>11:10 – 11:55</span>
-                                </div>
-                            </td>
-                            <td>
-                                ইংরেজি-১<br>
-                                ব্যব: জীববিজ্ঞান-১<br>
-                                গণিত-১
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>বুধবার</td>
-                            <td>
-                                <div class="time-row">
-                                    <span>11:10 – 11:55</span>
-                                    <span>12:00 – 12:45</span>
-                                </div>
-                            </td>
-                            <td>
-                                ইংরেজি-১<br>
-                                রসায়ন-১
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>বৃহস্পতিবার</td>
-                            <td>
-                                <div class="time-row">
-                                    <span>12:00 – 12:45</span>
-                                    <span>12:50 – 01:35</span>
-                                </div>
-                            </td>
-                            <td>
-                                ব্যব: গণিত-১<br>
-                                পদার্থ-১
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            `,
+            'k': {
+                'রবিবার': {
+                    '09:30 – 10:15': 'রসায়ন-১',
+                    '10:20 – 11:05': 'পদার্থ-১',
+                    '11:10 – 11:55': 'গণিত-১'
+                },
+                'সোমবার': {
+                    '09:30 – 10:15': 'ব্যব : রসায়ন-১',
+                    '10:20 – 11:05': 'জীববিজ্ঞান-১',
+                    '11:10 – 11:55': 'ব্যব : পদার্থ-১'
+                },
+                'মঙ্গলবার': {
+                    '09:30 – 10:15': 'ইংরেজি-১',
+                    '10:20 – 11:05': 'ব্যব: জীববিজ্ঞান-১',
+                    '11:10 – 11:55': 'গণিত -১'
+                },
+                'বুধবার': {
+                    '11:10 – 11:55': 'ইংরেজি-১',
+                    '12:00 – 12:45': 'রসায়ন -১'
+                },
+                'বৃহস্পতিবার': {
+                    '12:00 – 12:45': 'ব্যব: গণিত-১',
+                    '12:50 – 01:35': 'পদার্থ-১'
+                }
+            },
             'kh': `<div class="message-box">রুটিন আপডেটের কাজ চলছে। শীঘ্রই জানানো হবে।</div>`,
             'g': `<div class="message-box">রুটিন আপডেটের কাজ চলছে। শীঘ্রই জানানো হবে।</div>`
         },
@@ -115,10 +90,19 @@ document.addEventListener('DOMContentLoaded', () => {
         
         routineDisplay.innerHTML = ''; // Clear previous content
         if (branch) {
-            routineDisplay.innerHTML = routines[semester][branch];
+            const routineData = routines[semester][branch];
+            if (typeof routineData === 'string') {
+                routineDisplay.innerHTML = routineData;
+            } else {
+                routineDisplay.innerHTML = createRoutineHTML(`১ম সেমিস্টার - ${branch} শাখা`, routineData);
+            }
         } else {
             routineDisplay.innerHTML = routines[semester];
         }
+
+        // Hide sidebar and make content full screen
+        sidebar.classList.add('sidebar-hidden');
+        content.classList.add('content-full');
     }
 
     // Handle semester clicks
@@ -136,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
             branchNav.classList.remove('hidden');
             const defaultBranch = branchNav.querySelector('.branch-item[data-branch="k"]');
             
-            // Activate the 'k' branch and show its routine
             const allBranchItems = branchNav.querySelectorAll('.branch-item');
             allBranchItems.forEach(item => item.classList.remove('active'));
             if (defaultBranch) {
@@ -161,8 +144,5 @@ document.addEventListener('DOMContentLoaded', () => {
         const branch = branchItem.dataset.branch;
         showRoutine('1', branch);
     });
-
-    // Handle initial state: only show welcome popup
-    mainContainer.classList.add('hidden');
-    welcomePopup.classList.remove('hidden');
 });
+                    
