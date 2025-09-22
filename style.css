@@ -73,6 +73,7 @@ body {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     overflow: hidden;
     height: 90vh;
+    transition: all 0.5s ease-in-out;
 }
 
 .sidebar {
@@ -81,6 +82,13 @@ body {
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
     overflow-y: auto;
+    transition: transform 0.5s ease-in-out;
+}
+
+.sidebar-hidden {
+    transform: translateX(-100%);
+    width: 0;
+    padding: 0;
 }
 
 .logo {
@@ -118,12 +126,12 @@ body {
 }
 
 #semester-list li:hover {
-    background-color: #ffc107; /* Yellow hover */
+    background-color: #ffc107;
     transform: translateX(5px);
 }
 
 #semester-list li.active {
-    background-color: #007bff; /* Blue click */
+    background-color: #007bff;
     border-left: 5px solid yellow;
 }
 
@@ -131,6 +139,11 @@ body {
     flex-grow: 1;
     padding: 20px;
     overflow-y: auto;
+}
+
+.content-full {
+    width: 100%;
+    max-width: none;
 }
 
 header h1 {
@@ -146,6 +159,7 @@ header h1 {
     justify-content: center;
     gap: 15px;
     margin-bottom: 20px;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 .branch-item {
@@ -159,12 +173,12 @@ header h1 {
 }
 
 .branch-item:hover {
-    background-color: #ffc107; /* Yellow hover */
+    background-color: #ffc107;
     transform: translateY(-3px);
 }
 
 .branch-item.active {
-    background-color: #007bff; /* Blue click */
+    background-color: #007bff;
 }
 
 /* --- Routine Table Styles --- */
@@ -173,7 +187,7 @@ table {
     border-collapse: collapse;
     margin-top: 20px;
     color: #f0f0f0;
-    animation: fadeInScale 0.7s ease-in-out; /* Fade in and scale animation */
+    animation: fadeInScale 0.7s ease-in-out;
 }
 
 th, td {
@@ -193,10 +207,6 @@ tr:nth-child(even) {
 
 tr:hover {
     background-color: #3a3a3a;
-}
-
-.time-row span {
-    display: block; /* Each time on a new line */
 }
 
 .message-box {
@@ -226,6 +236,44 @@ tr:hover {
     display: none !important;
 }
 
+/* --- New Time & Subject Styles --- */
+.time-and-subject {
+    font-size: 1.1em;
+    padding: 8px 0;
+    border-bottom: 1px dashed #555;
+}
+.time-and-subject:last-child {
+    border-bottom: none;
+}
+.time-and-subject strong {
+    color: #ffc107;
+    margin-right: 10px;
+}
+
+/* --- Mobile responsive --- */
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+    
+    .sidebar-hidden {
+        transform: translateY(-100%);
+    }
+
+    .branch-nav {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
 /* --- Animations --- */
 @keyframes fadeIn {
     from { opacity: 0; }
@@ -246,5 +294,4 @@ tr:hover {
     0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
     40% { transform: translateY(-30px); }
     60% { transform: translateY(-15px); }
-    }
-    
+         }
