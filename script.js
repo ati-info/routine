@@ -17,6 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Helper function to create routine HTML
     function createRoutineHTML(title, routineData) {
+        if (!routineData) {
+            return `<div class="message-box">রুটিন আপডেটের কাজ চলছে। শীঘ্রই জানানো হবে।</div>`;
+        }
         let dailyRoutineHTML = '';
         for (const day in routineData) {
             let subjectsHTML = '';
@@ -52,35 +55,35 @@ document.addEventListener('DOMContentLoaded', () => {
         '1': {
             'k': {
                 'রবিবার': {
-                    '09:30 – 10:15': 'রসায়ন-১',
-                    '10:20 – 11:05': 'পদার্থ-১',
-                    '11:10 – 11:55': 'গণিত-১'
+                    '09:30 –--> 10:15': 'রসায়ন-১',
+                    '10:20 –--> 11:05': 'পদার্থ-১',
+                    '11:10 --–> 11:55': 'গণিত-১'
                 },
                 'সোমবার': {
-                    '09:30 – 10:15': 'ব্যব : রসায়ন-১',
-                    '10:20 – 11:05': 'জীববিজ্ঞান-১',
-                    '11:10 – 11:55': 'ব্যব : পদার্থ-১'
+                    '09:30 –--> 10:15': 'ব্যব : রসায়ন-১',
+                    '10:20 –--> 11:05': 'জীববিজ্ঞান-১',
+                    '11:10 –--> 11:55': 'ব্যব : পদার্থ-১'
                 },
                 'মঙ্গলবার': {
-                    '09:30 – 10:15': 'ইংরেজি-১',
-                    '10:20 – 11:05': 'ব্যব: জীববিজ্ঞান-১',
-                    '11:10 – 11:55': 'গণিত -১'
+                    '09:30 –--> 10:15': 'ইংরেজি-১',
+                    '10:20 –--> 11:05': 'ব্যব: জীববিজ্ঞান-১',
+                    '11:10 –--> 11:55': 'গণিত -১'
                 },
                 'বুধবার': {
-                    '11:10 – 11:55': 'ইংরেজি-১',
-                    '12:00 – 12:45': 'রসায়ন -১'
+                    '11:10 –--> 11:55': 'ইংরেজি-১',
+                    '12:00 –--> 12:45': 'রসায়ন -১'
                 },
                 'বৃহস্পতিবার': {
-                    '12:00 – 12:45': 'ব্যব: গণিত-১',
-                    '12:50 – 01:35': 'পদার্থ-১'
+                    '12:00 –--> 12:45': 'ব্যব: গণিত-১',
+                    '12:50 –--> 01:35': 'পদার্থ-১'
                 }
             },
-            'kh': `<div class="message-box">রুটিন আপডেটের কাজ চলছে। শীঘ্রই জানানো হবে।</div>`,
-            'g': `<div class="message-box">রুটিন আপডেটের কাজ চলছে। শীঘ্রই জানানো হবে।</div>`
+            'kh': null,
+            'g': null
         },
-        '2': `<div class="message-box">রুটিন আপডেটের কাজ চলছে। শীঘ্রই জানানো হবে।</div>`,
-        '4': `<div class="message-box">রুটিন আপডেটের কাজ চলছে। শীঘ্রই জানানো হবে।</div>`,
-        '6': `<div class="message-box">রুটিন আপডেটের কাজ চলছে। শীঘ্রই জানানো হবে।</div>`
+        '2': null,
+        '4': null,
+        '6': null
     };
 
     function showRoutine(semester, branch = null) {
@@ -89,20 +92,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         routineDisplay.innerHTML = ''; // Clear previous content
+        
+        let routineHTML = '';
         if (branch) {
-            const routineData = routines[semester][branch];
-            if (typeof routineData === 'string') {
-                routineDisplay.innerHTML = routineData;
-            } else {
-                routineDisplay.innerHTML = createRoutineHTML(`১ম সেমিস্টার - ${branch} শাখা`, routineData);
-            }
-        } else {
-            routineDisplay.innerHTML = routines[semester];
-        }
+            routineHTML = createRoutineHTML(`১ম সেমিস্টার - ${branch} শাখা`, routines[semester][branch]);
+            // show routine in full screen only if a branch is selected
+            sidebar.classList.add('sidebar-hidden');
+            content.classList.add('content-full');
 
-        // Hide sidebar and make content full screen
-        sidebar.classList.add('sidebar-hidden');
-        content.classList.add('content-full');
+        } else {
+            routineHTML = createRoutineHTML(`সেমিস্টার ${semester}`, routines[semester]);
+            // for other semesters, show the routine in the main content area
+            sidebar.classList.remove('sidebar-hidden');
+            content.classList.remove('content-full');
+        }
+        
+        routineDisplay.innerHTML = routineHTML;
     }
 
     // Handle semester clicks
@@ -118,14 +123,11 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (semester === '1') {
             branchNav.classList.remove('hidden');
-            const defaultBranch = branchNav.querySelector('.branch-item[data-branch="k"]');
-            
-            const allBranchItems = branchNav.querySelectorAll('.branch-item');
-            allBranchItems.forEach(item => item.classList.remove('active'));
-            if (defaultBranch) {
-                defaultBranch.classList.add('active');
-            }
-            showRoutine('1', 'k');
+            // When 1st semester is clicked, hide the main content and wait for branch selection
+            routineDisplay.innerHTML = `<div class="initial-message">শাখা নির্বাচন করুন</div>`;
+            sidebar.classList.remove('sidebar-hidden');
+            content.classList.remove('content-full');
+
         } else {
             branchNav.classList.add('hidden');
             showRoutine(semester);
@@ -145,4 +147,4 @@ document.addEventListener('DOMContentLoaded', () => {
         showRoutine('1', branch);
     });
 });
-                    
+                
