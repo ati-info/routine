@@ -1,25 +1,107 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>রুটিন সিস্টেম</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ক্লাস রুটিন</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="welcome">
-    <h1>👋 স্বাগতম! আপনার সেমিস্টার নির্বাচন করুন</h1>
-  </div>
 
-  <div class="semester-buttons">
-    <button onclick="showRoutine('1')">১ম পর্ব</button>
-    <button onclick="showRoutine('2')">২য় পর্ব</button>
-    <button onclick="showRoutine('4')">৪র্থ পর্ব</button>
-    <button onclick="showRoutine('6')">৬ষ্ঠ পর্ব</button>
-  </div>
+    <div class="container">
+        <h1 id="welcome-message">স্বাগতম!</h1>
+        <button id="show-routine-btn">রুটিন দেখুন</button>
+        
+        <div id="routine-section" class="hidden">
+            <h2>১ম সেমিস্টার - ক শাখা</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>দিন</th>
+                        <th>সময়</th>
+                        <th>বিষয়</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>রবিবার</td>
+                        <td>
+                            09:30 – 10:15<br>
+                            10:20 – 11:05<br>
+                            11:10 – 11:55
+                        </td>
+                        <td>
+                            রসায়ন-১<br>
+                            পদার্থ-১<br>
+                            গণিত-১
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>সোমবার</td>
+                        <td>
+                            09:30 – 10:15<br>
+                            10:20 – 11:05<br>
+                            11:10 – 11:55
+                        </td>
+                        <td>
+                            ব্যব: রসায়ন-১<br>
+                            জীববিজ্ঞান-১<br>
+                            ব্যব: পদার্থ-১
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>মঙ্গলবার</td>
+                        <td>
+                            09:30 – 10:15<br>
+                            10:20 – 11:05<br>
+                            11:10 – 11:55
+                        </td>
+                        <td>
+                            ইংরেজি-১<br>
+                            ব্যব: জীববিজ্ঞান-১<br>
+                            গণিত-১
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>বুধবার</td>
+                        <td>
+                            11:10 – 11:55<br>
+                            12:00 – 12:45
+                        </td>
+                        <td>
+                            ইংরেজি-১<br>
+                            রসায়ন-১
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>বৃহস্পতিবার</td>
+                        <td>
+                            12:00 – 12:45<br>
+                            12:50 – 01:35
+                        </td>
+                        <td>
+                            ব্যব: গণিত-১<br>
+                            পদার্থ-১
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-  <div id="routine-area"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const showRoutineBtn = document.getElementById('show-routine-btn');
+            const routineSection = document.getElementById('routine-section');
+            const welcomeMessage = document.getElementById('welcome-message');
 
-  <script src="script.js"></script>
+            showRoutineBtn.addEventListener('click', () => {
+                welcomeMessage.style.display = 'none';
+                showRoutineBtn.style.display = 'none';
+                routineSection.classList.remove('hidden');
+            });
+        });
+    </script>
 </body>
-</html>
+  </html>
+  
