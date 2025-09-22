@@ -1,32 +1,53 @@
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Noto Sans Bengali', sans-serif;
   background-color: #121212;
   color: #f0f0f0;
   text-align: center;
   padding: 20px;
 }
 
-h1 {
-  margin-bottom: 20px;
-  font-size: 28px;
+.welcome h1 {
   color: #00ffc3;
+  margin-bottom: 30px;
 }
 
-.routine-container {
-  overflow-x: auto;
+.semester-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.semester-buttons button {
+  background-color: #1e1e1e;
+  color: #00ffc3;
+  border: 2px solid #00ffc3;
+  padding: 12px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 8px;
+}
+
+.semester-buttons button:hover {
+  background-color: #00ffc3;
+  color: #121212;
+  transform: scale(1.05);
 }
 
 table {
   width: 100%;
+  max-width: 800px;
+  margin: auto;
   border-collapse: collapse;
-  background-color: #1e1e1e;
+  background-color: #1a1a1a;
 }
 
 th, td {
-  padding: 12px;
+  padding: 10px;
   border: 1px solid #333;
-  text-align: center;
 }
 
 th {
@@ -34,11 +55,6 @@ th {
   color: #00ffc3;
 }
 
-td {
-  background-color: #1a1a1a;
-}
-
 tr:hover td {
   background-color: #2a2a2a;
-  transition: 0.3s;
-}
+  }
