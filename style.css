@@ -340,4 +340,32 @@ tr:hover {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
   }
+
+/* --- Footer Styles --- */
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    background-color: #1e1e1e;
+    color: #f0f0f0;
+    font-size: 0.9em;
+    border-top: 1px solid #333;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+.footer p {
+    font-family: 'Teko', sans-serif;
+    font-size: 1.2em;
+    animation: jiggle 2s infinite ease-in-out;
+}
+
+@keyframes jiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-1deg); }
+    75% { transform: rotate(1deg); }
+        }
+
   
